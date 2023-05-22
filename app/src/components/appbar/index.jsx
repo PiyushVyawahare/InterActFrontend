@@ -60,7 +60,6 @@ function ChatAppBar() {
     },
   });  
 
-  getUserDetails();
 
   return (
     <ThemeProvider theme={theme}>
