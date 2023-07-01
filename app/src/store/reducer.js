@@ -1,17 +1,25 @@
-import { USER_DETAILS_FAIL, USER_DETAILS_SUCCES } from "./actionTypes"
+import { USER_LOGIN_SUCCESS, USER_LOGIN_FAILURE } from "./actionTypes"
 
 
-const initial_state = null
+const initial_state = {
+  loading: 0,
+  id: null,
+  user_name: null,
+  expiry: null,
+  photo: null,
+  error: null,
+  alert: 0,
+}
 
-const setUserDetails = (state = initial_state, action) => {
+const authReducer = (state = initial_state, action) => {
   switch (action.type) {
-    case USER_DETAILS_SUCCES:
-      return Object.assign({}, state, action?.payload);
-    case USER_DETAILS_FAIL:
-      return Object.assign({}, state, action?.payload);
+    case USER_LOGIN_SUCCESS:
+      return Object.assign({}, state, {...action?.payload, loading: 0});
+    case USER_LOGIN_FAILURE:
+      return Object.assign({}, state, {...action?.payload, loading: 0});
     default:
       return state;
   }
 } 
 
-export default setUserDetails;
+export default authReducer;

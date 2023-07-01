@@ -1,2 +1,2 @@
-export const USER_DETAILS_SUCCES = "User Details Success";
-export const USER_DETAILS_FAIL = "User Details Fail"
+export const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";
+export const USER_LOGIN_FAILURE = "USER_LOGIN_FAILURE";
