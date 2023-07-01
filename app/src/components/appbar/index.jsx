@@ -11,6 +11,9 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import { connect } from 'react-redux';
+import ButtonComp from '../button';
+import { removeAuthDetails } from '../../helpers/token-helper';
 
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -19,7 +22,7 @@ import INTERACT_LOGO from '../../INTERACT_LOGO.svg';
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function ChatAppBar() {
+function ChatAppBar(props) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -80,7 +83,7 @@ function ChatAppBar() {
             >
               <MenuIcon />
             </IconButton>
-            <Menu
+            {/* <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
@@ -103,7 +106,7 @@ function ChatAppBar() {
                   <Typography color='#000000' textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
-            </Menu>
+            </Menu> */}
           </Box>
           <Box sx={{flexGrow: 1, display: { xs: 'flex', md: 'none' }}}>
             <img src={INTERACT_LOGO} className="App-logo" alt="logo" width={150} />
@@ -120,10 +123,12 @@ function ChatAppBar() {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          {
+            (props?.user_name) ? 
+            <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Remy Sharp" src= {props.photo ?? "/static/images/avatar/2.jpg"} />
               </IconButton>
             </Tooltip>
             <Menu
@@ -142,17 +147,27 @@ function ChatAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem key='Logout' onClick={removeAuthDetails}>
+                <Typography textAlign="center">Logout</Typography>
+              </MenuItem>
             </Menu>
-          </Box>
+            </Box> :
+            <ButtonComp name= 'Login' onClick={props.onLoginClick} />
+          }
         </Toolbar>
       </Container>
     </AppBar>
     </ThemeProvider>
   );
 }
-export default ChatAppBar;
+
+const mapStateToProps = state => {
+  return {
+    loading: state.auth.loading,
+    id: state.auth.id,
+    user_name: state.auth.user_name,
+    expiry: state.auth.expiry,
+    photo: state.auth.photo
+  };
+};
+export default connect(mapStateToProps)(ChatAppBar);

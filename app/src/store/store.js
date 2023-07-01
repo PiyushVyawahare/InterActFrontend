@@ -1,9 +1,11 @@
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import thunk from 'redux-thunk'
-import setUserDetails from "./reducer";
+import auth from "./reducer";
+import LoginReducer from "../pages/auth/store/reducer"
 
 const rootReducer = combineReducers({
-  setUserDetails,
+  auth: auth,
+  login: LoginReducer,
 });
 
 // create a single store, this store will be provided to the top level react component
