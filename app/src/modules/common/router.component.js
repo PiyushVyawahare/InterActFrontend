@@ -2,9 +2,12 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from '../../pages/auth/landing/landing_page'
 import Home from '../../pages/home/index';
+import NewRoom from '../../pages/createRoom/index';
+import Invites from '../../pages/invites';
+import Room from '../../pages/room'
 import { setUserDetails } from '../../store/action';
 import { connect } from 'react-redux';
-import { getAccessToken, getUserDetailsFromStorage } from '../../helpers/token-helper';
+import { getUserDetailsFromStorage } from '../../helpers/token-helper';
 
 const AppRouter = (props) =>{
   if (!props?.expiry) {
@@ -20,9 +23,17 @@ const AppRouter = (props) =>{
       <Routes>
         { 
           (props?.expiry && props.expiry > Date.now()) ? 
-            <Route path='/' element={<Home />}></Route>
+            <>
+              <Route exact path='/Room' element={<NewRoom />}></Route>
+              <Route exact path='/' element={<Home />}></Route>
+              <Route exact path='/Invites' element={<Invites />}></Route>
+              <Route exact path='/rooms/connect' element={<Room />}></Route>
+            </>
           :
-          <Route path='/' element={<LandingPage />}></Route>
+          <>
+            <Route path='/' element={<LandingPage />}></Route>
+            <Route path='*' element={<LandingPage />}></Route>
+          </>
         }
         </Routes>
     </Router>

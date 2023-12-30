@@ -48,7 +48,7 @@ function ButtonComp(props) {
         },
     }); 
   return (
-    <ThemeProvider theme = {props.theme === 'Dark' ? DarkTheme : lightTheme}><Button variant= {props.varient ?? "contained"} onClick={props?.onClick} >{props.name}</Button></ThemeProvider>
+    <ThemeProvider theme = {props.theme === 'Dark' ? DarkTheme : lightTheme}><Button variant= {props.varient ?? "contained"} onClick={props?.onClick} type={props?.type ?? 'Button'} >{props.name}</Button></ThemeProvider>
   )
 }
 
