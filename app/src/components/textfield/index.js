@@ -55,11 +55,12 @@ function TextComp(props) {
             label= {props.label ?? 'Label'} 
             variant="outlined" 
             onChange={props.onChange} 
-            required = {props.required ?? 0}
+            required = {props.required ?? false}
             type={props.type ?? ''}
-            fullWidth = {props.fullWidth ?? 0}
+            fullWidth = {props.fullWidth ?? false}
             size = {props.size ?? 'medium'}
             margin = {props.margin ?? 'none'}
+            name = {props.name ?? ''}
         />
         
     </ThemeProvider>

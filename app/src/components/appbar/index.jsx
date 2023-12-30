@@ -18,13 +18,16 @@ import { removeAuthDetails } from '../../helpers/token-helper';
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import INTERACT_LOGO from '../../INTERACT_LOGO.svg';
+import { useNavigate } from "react-router-dom";
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = ['Room', 'Invites'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function ChatAppBar(props) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -36,6 +39,12 @@ function ChatAppBar(props) {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+
+  const changeWindowLoaction = (data) => {
+    return () => {
+      navigate(data);
+    }
+  }
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
@@ -83,7 +92,7 @@ function ChatAppBar(props) {
             >
               <MenuIcon />
             </IconButton>
-            {/* <Menu
+            <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
@@ -102,11 +111,11 @@ function ChatAppBar(props) {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={(changeWindowLoaction(`/${page}`))}>
                   <Typography color='#000000' textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
-            </Menu> */}
+            </Menu>
           </Box>
           <Box sx={{flexGrow: 1, display: { xs: 'flex', md: 'none' }}}>
             <img src={INTERACT_LOGO} className="App-logo" alt="logo" width={150} />
@@ -115,7 +124,7 @@ function ChatAppBar(props) {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={changeWindowLoaction(`/${page}`)}
                 sx={{ my: 2, color: '#F1F6F9', display: 'block', font: 'TT hoves', fontFamily: 'TT hoves' }}
               >
                 {page}
@@ -128,7 +137,7 @@ function ChatAppBar(props) {
             <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src= {props.photo ?? "/static/images/avatar/2.jpg"} />
+                <Avatar src= {props.photo} />
               </IconButton>
             </Tooltip>
             <Menu

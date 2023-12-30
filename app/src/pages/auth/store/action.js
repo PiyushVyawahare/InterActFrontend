@@ -41,7 +41,7 @@ export const register_user = (requestPayload) => {
         }, 5000);
       })
       .catch(err => {
-        dispatch({ type: ALERT, payload: { alert:1, type: 'error', message: "Internal server error" } })
+        dispatch({ type: ALERT, payload: { alert:1, type: 'error', message: err?.response?.data?.message } })
         console.log('SIGN IN user error', err);
       });
   };
@@ -59,8 +59,7 @@ export const verifyOtp = (requestPayload) => {
         }, 5000);
       })
       .catch(err => {
-        dispatch({ type: ALERT, payload: { alert:1, type: 'error', message: err?.message } })
-        console.log('VERIFY OTP ERROR', err);
+        dispatch({ type: ALERT, payload: { alert:1, type: 'error', message: err?.response?.data?.message || err?.message } })
       });
   };
 }
@@ -82,8 +81,9 @@ export const loginUser = (requestPayload) => {
         window.location = '/';
       })
       .catch(err => {
-        dispatch({ type: ALERT, payload: { alert:1, type: 'error', message: err?.message } })
-        console.log('VERIFY OTP ERROR', err);
+        console.log(err);
+        dispatch({ type: ALERT, payload: { alert:1, type: 'error', message: err?.response?.data?.message || err?.message } })
+        console.log('LOGIN ERROR', err);
       });
   };
 }
